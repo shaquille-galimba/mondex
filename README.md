@@ -2,7 +2,7 @@
 
 It's like Pokedex but for Monster Hunter Bosses!
 Gives you the species, locations, and weaknesses of a specific monster.
-Allows user the choice to list all the monster, species, locations, or search by the monster's name.
+Allows user the choice to list all the monster, species, or locations
 Then the app shows the details of a monster they have chosen.
 
 ## Installation
