@@ -17,7 +17,20 @@ FLOW
       prints out the details of the chosen monster
   Ask user if they want to go back to choose what to list, go back to the previous list, or exit the Application
 
+CLASSES
+  -CLI
+  -Scraper
+  -Monster
+  -Species
+  -Location
 
+CLASS RELATIONSHIPS
+  -Monster has many Location
+  -Monster has one Species
+  -Location has many Monster
+  -Species has many Monster
+  -Scraper scrape data to create Monster instances and give its attributes
+  -CLI interact and give information with the user
 
 
 
