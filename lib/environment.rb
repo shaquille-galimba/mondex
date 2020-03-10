@@ -4,6 +4,8 @@ require_relative "mondex/scraper"
 require_relative "mondex/monster"
 require_relative "mondex/species"
 require_relative "mondex/location"
+
+require 'nokogiri'
 require 'pry'
 
 module Mondex

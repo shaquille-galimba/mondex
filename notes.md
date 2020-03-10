@@ -50,18 +50,23 @@ https://www.ign.com/wikis/monster-hunter-world/Monster_List_-_Monster_Hunter:_Wo
 		-Name
 		-Bosses
 
-<!-- require 'nokogiri'
-require 'open-uri'
+    <!-- require 'nokogiri'
+    require 'open-uri'
 
-site = "https://www.ign.com/wikis/monster-hunter-world/Monster_List_-_Monster_Hunter:_World_and_Iceborne#Large_Monsters"
-
-
-page = Nokogiri::HTML(open(site))
+    site = "https://www.ign.com/wikis/monster-hunter-world/Monster_List_-_Monster_Hunter:_World_and_Iceborne#Large_Monsters"
 
 
+    page = Nokogiri::HTML(open(site))
 
-monsters = page.css("section.jsx-1653715561.jsx-3569582989.wiki-section tr td")
 
-monsters.each do |m|
-  puts m.css("a").text
-end -->
+
+    monsters = page.css("section.jsx-1653715561.jsx-3569582989.wiki-section tr td a:last-child")
+
+    # puts monsters
+    boss = []
+    monsters.each do |m|
+      boss << m.text.strip
+    end
+
+    puts boss.count
+    "Finished" -->
