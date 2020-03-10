@@ -1,0 +1,3 @@
+class Mondex::Species
+
+end

@@ -1,0 +1,3 @@
+class Mondex::Location
+
+end
