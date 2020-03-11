@@ -11,15 +11,13 @@ class Mondex::CLI
       # ask user if they want a list of monster, species, or location
     # list_monsters
     # list_species
-    # list_locations
     # show_monster_details
   end
 
   def get_user_choice
     puts "1. List all monster"
     puts "2. List all species"
-    puts "3. List all locations"
-    puts "4. Exit Mondex :("
+    puts "3. Exit Mondex :("
     choice = gets.strip
 
     case choice
@@ -28,8 +26,6 @@ class Mondex::CLI
     when "2"
       list_species
     when "3"
-      list_locations
-    when "4"
       exit
     else
       invalid_selection
@@ -43,10 +39,6 @@ class Mondex::CLI
 
   def list_species
     puts "Pick a number to show all monsters that belong to that species"
-  end
-
-  def list_locations
-    puts "Pick a number to show all monsters that you can see on that location"
   end
 
   def invalid_selection

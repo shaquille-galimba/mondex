@@ -10,9 +10,9 @@ FLOW
       ask user to choose monster of their choice
       prints out the details of the chosen monster
     if user choose to list species or locations
-      list all the species/locations
-      ask user to choose a specific species/locations
-      list all the monsters that has the specific chosen species/location
+      list all the species
+      ask user to choose a specific species
+      list all the monsters that has the specific chosen species
       ask user to choose from the monster list
       prints out the details of the chosen monster
   Ask user if they want to go back to choose what to list, go back to the previous list, or exit the Application
@@ -22,12 +22,9 @@ CLASSES
   -Scraper
   -Monster
   -Species
-  -Location
 
 CLASS RELATIONSHIPS
-  -Monster has many Location
   -Monster has one Species
-  -Location has many Monster
   -Species has many Monster
   -Scraper scrape data to create Monster instances and give its attributes
   -CLI interact and give information with the user
@@ -36,19 +33,16 @@ CLASS RELATIONSHIPS
 
 
 
-https://www.ign.com/wikis/monster-hunter-world/Monster_List_-_Monster_Hunter:_World_and_Iceborne
+https://monsterhunterworld.wiki.fextralife.com/Large+Monsters
 	-Boss
-		-Species, Locations(classes)
+		-Species, Locations
 		-Link to a specific boss
 		-Name
 		-Description
 		-Weakness
 	-Species
-		-Bosses
+		-Monster
 		-Name
-	-Locations
-		-Name
-		-Bosses
 
     <!-- require 'nokogiri'
     require 'open-uri'
