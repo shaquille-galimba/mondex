@@ -9,7 +9,7 @@ class Mondex::Scraper
     monsters_list.each do |m|
       monster_name = m.text
       monster_url = m.attribute("href")
-      monster << {name: monster_name, url: monster_url}
+      monsters << {name: monster_name, url: monster_url}
     end
     monsters
   end
