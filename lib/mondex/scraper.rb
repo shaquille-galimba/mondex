@@ -2,16 +2,16 @@ require 'open-uri'
 class Mondex::Scraper
 
   def self.scrape_list_page(index_url)
-    monsters_list = Nokogiri::HTML(open(index_url))
-    monsters = monster_list.css("#tagged-pages-container a")
+    monster_page = Nokogiri::HTML(open(index_url))
+    monsters_list = monster_page.css("#tagged-pages-container a")
 
-    monster = []
-    monsters.each do |m|
+    monsters = []
+    monsters_list.each do |m|
       monster_name = m.text
       monster_url = m.attribute("href")
       monster << {name: monster_name, url: monster_url}
     end
-    monster
+    monsters
   end
 
   def self.scrape_monster_page(url)
