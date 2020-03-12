@@ -37,7 +37,7 @@ class Mondex::CLI
   end
 
   def list_monsters
-    Mondex::Monster.all.each {|m| puts m.name}
+    Mondex::Monster.all.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
     puts "Type the name of the monster to view its details"
     input = gets.strip
     view_details(input)
