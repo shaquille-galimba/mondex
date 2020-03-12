@@ -25,7 +25,7 @@ class Mondex::Scraper
     monster_box = monster_page.css("#infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
     monster_box.each_with_index do |title, idx|
       if title == "Location(s)" || title == "Locations"
-        monster[:location] = monster_box[idx+1]
+        monster[:locations] = monster_box[idx+1].split /(?=[A-Z])/
       elsif title == "Elements"
         monster[:elements] = monster_box[idx+1]
       elsif title == "Weakness"

@@ -1,5 +1,8 @@
 class Mondex::CLI
+  WEBSITE = "https://monsterhunterworld.wiki.fextralife.com/Large+Monsters"
   def call
+    create_monsters
+    add_attributes_to_monsters
     puts "Welcome to Mondex!"
     puts "Your monster hunter 'Pokedex'!"
     puts "'Know your enemy' before you hunt and carve your spoils!"
@@ -33,8 +36,11 @@ class Mondex::CLI
     end
   end
 
-  def list_monsters(array_of_monster_instances = nil)
+  def list_monsters
+    Mondex::Monster.all.each {|m| puts m.name}
     puts "Type the name of the monster to view its details"
+    input = gets.strip
+    view_details(input)
   end
 
   def list_species
@@ -43,5 +49,29 @@ class Mondex::CLI
 
   def invalid_selection
     puts "Please pick a valid selection"
+  end
+
+  def view_details(input)
+    monster = Mondex::Monster.find_by_name(input)
+    puts monster.name
+    puts "Species: #{monster.species} | Locations: #{monster.locations}"
+    puts "Weaknesses:"
+    monster.weakness.each {|w| puts " #{w}"}
+    puts "Resistances:"
+    monster.resistances.each {|r| puts "  #{r}"}
+    puts "Elements:"
+    puts "  #{monster.elements}"
+  end
+
+  def create_monsters
+    monster_array = Mondex::Scraper.scrape_list_page(WEBSITE)
+    Mondex::Monster.create_from_list(monster_array)
+  end
+
+  def add_attributes_to_monsters
+    Mondex::Monster.all.each do |monster|
+      attributes = Mondex::Scraper.scrape_monster_page(monster.url)
+      monster.add_attributes(attributes)
+    end
   end
 end
