@@ -10,6 +10,7 @@ class Mondex::CLI
     # Mondex::Scraper.new.try
     # Methods:
     get_user_choice
+    binding.pry
 
       # ask user if they want a list of monster, species, or location
     # list_monsters
@@ -27,13 +28,18 @@ class Mondex::CLI
     when "1"
       list_monsters
     when "2"
-      list_species
+      # list_species
+      list_all_monster_details
     when "3"
       exit
     else
       invalid_selection
       get_user_choice
     end
+  end
+
+  def list_all_monster_details
+    Mondex::Monster.all.each {|m| view_details("#{m.name}")}
   end
 
   def list_monsters
