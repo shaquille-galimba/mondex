@@ -9,8 +9,10 @@ class Mondex::CLI
     puts "Pick the number of your choice."
     # Mondex::Scraper.new.try
     # Methods:
+    # binding.pry
+
     get_user_choice
-    binding.pry
+
 
       # ask user if they want a list of monster, species, or location
     # list_monsters
@@ -28,8 +30,7 @@ class Mondex::CLI
     when "1"
       list_monsters
     when "2"
-      # list_species
-      list_all_monster_details
+      list_species
     when "3"
       exit
     else
@@ -44,9 +45,14 @@ class Mondex::CLI
 
   def list_monsters
     Mondex::Monster.all.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
-    puts "Type the name of the monster to view its details"
-    input = gets.strip
-    view_details(input)
+    puts "Type the name of the monster to view its details or type 'all' to view all monster details"
+    input = gets.strip.capitalize
+
+    if input == "all"
+      list_all_monster_details
+    else
+      view_details(input)
+    end
   end
 
   def list_species
@@ -58,15 +64,20 @@ class Mondex::CLI
   end
 
   def view_details(input)
-    monster = Mondex::Monster.find_by_name(input)
-    puts monster.name
-    puts "Species: #{monster.species} | Locations: #{monster.locations}"
-    puts "Weaknesses:"
-    monster.weakness.each {|w| puts " #{w}"}
-    puts "Resistances:"
-    monster.resistances.each {|r| puts "  #{r}"}
-    puts "Elements:"
-    puts "  #{monster.elements}"
+    if monster = Mondex::Monster.find_by_name(input)
+      puts monster.name
+      puts "Species: #{monster.species} | Locations: #{monster.locations}"
+      puts "Weaknesses:"
+      monster.weakness.each {|w| puts " #{w}"} if monster.weakness
+      puts "Resistances:"
+      monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
+      puts "Elements:"
+      puts "  #{monster.elements}"
+      puts "Description:"
+      puts "  #{monster.bio}"
+    else
+      invalid_selection
+    end
   end
 
   def create_monsters

@@ -16,6 +16,7 @@ class Mondex::Scraper
 
   def self.scrape_monster_page(url)
     monster = {}
+
     # locations = []
     monster_page = Nokogiri::HTML(open("https:" + url))
 
@@ -25,13 +26,13 @@ class Mondex::Scraper
     # monster_page.css("#infobox .wiki_table tr").find {|t| t.text.include?("Location")}.css("td a").each {|l| locations << l.text}
     # monster[:locations] = locations
 
-    monster_box = monster_page.css("#infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
+    monster_box = monster_page.css("div.infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
     monster_box.each_with_index do |title, idx|
       if title == "Location(s)" || title == "Locations"
         monster[:locations] = monster_box[idx+1]
       elsif title == "Elements"
         monster[:elements] = monster_box[idx+1]
-      elsif title == "Weakness"
+      elsif title == "Weakness" || title == "Weaknesses"
         monster[:weakness] = monster_box[idx+1].gsub(/[(][A-Z]/, "(w").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
       elsif title == "Resistances"
         monster[:resistances] = monster_box[idx+1].gsub(/[(][A-Z]/, "(w").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
