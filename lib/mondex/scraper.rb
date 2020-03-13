@@ -17,19 +17,18 @@ class Mondex::Scraper
   def self.scrape_monster_page(url)
     monster = {}
 
-    # locations = []
     monster_page = Nokogiri::HTML(open("https:" + url))
 
     monster_species = monster_page.css("#wiki-content-block ul li").find {|t| t.text.include?("Species")}
     monster[:bio] = monster_page.css("#wiki-content-block blockquote p").text
     monster[:species] = monster_species.css("a").text unless monster_species.css("a").text == ""
-    # monster_page.css("#infobox .wiki_table tr").find {|t| t.text.include?("Location")}.css("td a").each {|l| locations << l.text}
-    # monster[:locations] = locations
 
     monster_box = monster_page.css("div.infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
     monster_box.each_with_index do |title, idx|
       if title == "Location(s)" || title == "Locations"
         monster[:locations] = monster_box[idx+1]
+      elsif title == "Species"
+        monster[:species] = monster_box[idx+1] unless monster[:species]
       elsif title == "Elements"
         monster[:elements] = monster_box[idx+1]
       elsif title == "Weakness" || title == "Weaknesses"

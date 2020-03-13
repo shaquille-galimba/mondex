@@ -31,7 +31,7 @@ class Mondex::CLI
   end
 
   def print_monsters_details(array_of_monsters)
-    array_of_monsters.each {|m| view_details(m)}
+    array_of_monsters.each {|m| print_details(m)}
   end
 
   def list_all_monsters
@@ -42,7 +42,7 @@ class Mondex::CLI
     if input == "All"
       print_monsters_details(Mondex::Monster.all)
     elsif monster = Mondex::Monster.find_by_name(input)
-      view_details(monster)
+      print_details(monster)
     else
       invalid_selection
     end
@@ -61,7 +61,8 @@ class Mondex::CLI
     puts "Please pick a valid selection"
   end
 
-  def view_details(monster)
+  def print_details(monster)
+      puts "--------------------------------------------------------------"
       puts monster.name
       puts "Species: #{monster.species} | Locations: #{monster.locations}"
       puts "Weaknesses:"
@@ -72,6 +73,7 @@ class Mondex::CLI
       puts "  #{monster.elements}"
       puts "Description:"
       puts "  #{monster.bio}"
+      puts "--------------------------------------------------------------"
   end
 
   def create_monsters
