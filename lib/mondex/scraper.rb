@@ -19,17 +19,17 @@ class Mondex::Scraper
 
     monster_page = Nokogiri::HTML(open("https:" + url))
 
-    monster_species = monster_page.css("#wiki-content-block ul li").find {|t| t.text.include?("Species")}.text.split(": ")[1]
+    # monster[:species] = monster_page.css("#wiki-content-block ul li").find {|t| t.text.include?("Species")}.text.split(": ")[1]
     monster[:bio] = monster_page.css("#wiki-content-block blockquote p").text
     # monster[:species] = monster_species.css("a").text unless monster_species.css("a").text == ""
-    monster[:species] = monster_species
+    # monster[:species] = monster_species
 
     monster_box = monster_page.css("div.infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
     monster_box.each_with_index do |title, idx|
       if title == "Location(s)" || title == "Locations"
         monster[:locations] = monster_box[idx+1]
       elsif title == "Species"
-        monster[:species] = monster_box[idx+1] unless monster[:species]
+        monster[:species] = monster_box[idx+1].delete_suffix("s")
       elsif title == "Elements"
         monster[:elements] = monster_box[idx+1]
       elsif title == "Weakness" || title == "Weaknesses"
@@ -38,6 +38,7 @@ class Mondex::Scraper
         monster[:resistances] = monster_box[idx+1].gsub(/[(][A-Z]/, "(w").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
       end
     end
+    monster[:species] = monster_page.css("#wiki-content-block ul li").find {|t| t.text.include?("Species")}.text.split(": ")[1].delete_suffix("s") unless monster[:species]
     monster
   end
 
