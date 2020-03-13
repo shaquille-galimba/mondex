@@ -29,7 +29,7 @@ class Mondex::Monster
       if attribute == :species
         new_species = Mondex::Species.create_or_find_by_name(value)
         self.send("#{attribute}=", new_species)
-        new_species.monster << self
+        new_species.monsters << self
       else
         self.send("#{attribute}=", value)
       end

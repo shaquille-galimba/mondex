@@ -1,6 +1,6 @@
 class Mondex::Species
   attr_accessor :name
-  attr_reader :monster
+  attr_reader :monsters
 
   @@all = []
 

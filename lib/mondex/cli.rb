@@ -63,7 +63,7 @@ class Mondex::CLI
   def print_details(monster)
       puts "--------------------------------------------------------------"
       puts monster.name
-      puts "Species: #{monster.species} | Locations: #{monster.locations}"
+      puts "Species: #{monster.species.name} | Locations: #{monster.locations}"
       puts "Weaknesses:"
       monster.weakness.each {|w| puts " #{w}"} if monster.weakness
       puts "Resistances:"
