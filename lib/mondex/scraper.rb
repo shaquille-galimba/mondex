@@ -19,9 +19,10 @@ class Mondex::Scraper
 
     monster_page = Nokogiri::HTML(open("https:" + url))
 
-    monster_species = monster_page.css("#wiki-content-block ul li").find {|t| t.text.include?("Species")}
+    monster_species = monster_page.css("#wiki-content-block ul li").find {|t| t.text.include?("Species")}.text.split(": ")[1]
     monster[:bio] = monster_page.css("#wiki-content-block blockquote p").text
-    monster[:species] = monster_species.css("a").text unless monster_species.css("a").text == ""
+    # monster[:species] = monster_species.css("a").text unless monster_species.css("a").text == ""
+    monster[:species] = monster_species
 
     monster_box = monster_page.css("div.infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
     monster_box.each_with_index do |title, idx|

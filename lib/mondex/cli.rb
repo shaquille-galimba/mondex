@@ -7,6 +7,7 @@ class Mondex::CLI
     puts "Your monster hunter 'Pokedex'!"
     puts "'Know your enemy' before you hunt and carve your spoils!"
     puts "Pick the number of your choice."
+    binding.pry
     get_user_choice
   end
 
@@ -53,6 +54,7 @@ class Mondex::CLI
   end
 
   def list_species
+    Mondex::Species.all.each {|s| puts s.name}
     puts "Pick a number to show all monsters that belong to that species"
   end
 
