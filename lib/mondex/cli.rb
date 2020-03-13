@@ -7,17 +7,7 @@ class Mondex::CLI
     puts "Your monster hunter 'Pokedex'!"
     puts "'Know your enemy' before you hunt and carve your spoils!"
     puts "Pick the number of your choice."
-    # Mondex::Scraper.new.try
-    # Methods:
-    # binding.pry
-
     get_user_choice
-
-
-      # ask user if they want a list of monster, species, or location
-    # list_monsters
-    # list_species
-    # show_monster_details
   end
 
   def get_user_choice
@@ -28,7 +18,8 @@ class Mondex::CLI
 
     case choice
     when "1"
-      list_monsters
+      list_all_monsters
+
     when "2"
       list_species
     when "3"
@@ -39,20 +30,27 @@ class Mondex::CLI
     end
   end
 
-  def list_all_monster_details
-    Mondex::Monster.all.each {|m| view_details("#{m.name}")}
+  def print_monsters_details(array_of_monsters)
+    array_of_monsters.each {|m| view_details(m)}
   end
 
-  def list_monsters
-    Mondex::Monster.all.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
+  def list_all_monsters
+    print_monsters(Mondex::Monster.all)
     puts "Type the name of the monster to view its details or type 'all' to view all monster details"
-    input = gets.strip.capitalize
+    input = gets.strip.split.map {|w| w.capitalize}.join(" ")
 
-    if input == "all"
-      list_all_monster_details
+    if input == "All"
+      print_monsters_details(Mondex::Monster.all)
+    elsif monster = Mondex::Monster.find_by_name(input)
+      view_details(monster)
     else
-      view_details(input)
+      invalid_selection
     end
+    get_user_choice
+  end
+
+  def print_monsters(array_of_monsters)
+    array_of_monsters.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
   end
 
   def list_species
@@ -63,8 +61,7 @@ class Mondex::CLI
     puts "Please pick a valid selection"
   end
 
-  def view_details(input)
-    if monster = Mondex::Monster.find_by_name(input)
+  def view_details(monster)
       puts monster.name
       puts "Species: #{monster.species} | Locations: #{monster.locations}"
       puts "Weaknesses:"
@@ -75,9 +72,6 @@ class Mondex::CLI
       puts "  #{monster.elements}"
       puts "Description:"
       puts "  #{monster.bio}"
-    else
-      invalid_selection
-    end
   end
 
   def create_monsters
