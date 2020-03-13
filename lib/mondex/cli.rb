@@ -19,7 +19,6 @@ class Mondex::CLI
     case choice
     when "1"
       list_all_monsters
-
     when "2"
       list_species
     when "3"

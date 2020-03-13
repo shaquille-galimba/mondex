@@ -26,7 +26,13 @@ class Mondex::Monster
 
   def add_attributes(hash)
     hash.each do |attribute, value|
-      self.send("#{attribute}=", value)
+      if attribute == :species
+        new_species = Mondex::Species.create_or_find_by_name(value)
+        self.send("#{attribute}=", new_species)
+        new_species.monster << self
+      else
+        self.send("#{attribute}=", value)
+      end
     end
     self
   end
