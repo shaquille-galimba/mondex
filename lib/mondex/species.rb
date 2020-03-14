@@ -10,10 +10,6 @@ class Mondex::Species
     @@all << self
   end
 
-  # def self.create(name)
-  #   self.new(name)
-  # end
-
   def self.all
     @@all.sort_by {|s| s.name}
   end
