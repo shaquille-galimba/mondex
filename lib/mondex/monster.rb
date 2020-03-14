@@ -21,7 +21,7 @@ class Mondex::Monster
   end
 
   def self.find_by_name(monster_name)
-    monster = Mondex::Monster.all.find {|m| m.name.include?(monster_name)}
+    Mondex::Monster.all.find {|m| m.name == monster_name}
   end
 
   def add_attributes(hash)

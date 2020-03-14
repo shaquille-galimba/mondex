@@ -10,6 +10,7 @@ class Mondex::CLI
     puts "Welcome to Mondex!".colorize(:blue)
     puts "Your monster hunter 'Pokedex'!".colorize(:blue)
     puts "'Know your enemy' before you hunt and carve your spoils!".colorize(:blue)
+    binding.pry
     get_user_choice
   end
 
@@ -22,9 +23,9 @@ class Mondex::CLI
 
     case choice
     when "1"
-      list_all_monsters(Mondex::Monster.all)
+      pick_monsters(Mondex::Monster.all)
     when "2"
-      list_species
+      print_species
     when "3"
       exit
     else
@@ -37,17 +38,18 @@ class Mondex::CLI
     array_of_monsters.each {|m| print_details(m)}
   end
 
-  def list_all_monsters(array_of_monsters)
+  def pick_monsters(array_of_monsters)
     print_monsters(array_of_monsters)
     puts "Type the number or name of the monster to view its details or type 'all' to view all monster details".colorize(:yellow)
     input = gets.strip.split.map {|w| w.capitalize}.join(" ")
     number_choice = (input.to_i) - 1
+    monsters = array_of_monsters.select {|m| m.name.include?(input)}
 
     if input == "All"
       print_monsters_details(array_of_monsters)
-    elsif monster = Mondex::Monster.find_by_name(input)
-      print_details(monster)
-    elsif number_choice < array_of_monsters.count
+    elsif monsters != []
+      print_monsters_details(monsters)
+    elsif number_choice.between?(0, array_of_monsters.count - 1)
       print_details(array_of_monsters[number_choice])
     else
       invalid_selection
@@ -59,21 +61,22 @@ class Mondex::CLI
     array_of_monsters.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
   end
 
-  def list_species
-    Mondex::Species.all.each_with_index {|s, idx| puts "#{idx+1}. #{s.name}"}
-    list_monsters_through_species
+  def print_species
+    # Mondex::Species.all.each_with_index {|s, idx| puts "#{idx+1}. #{s.name}"}
+    print_monsters(Mondex::Species.all)
+    pick_monsters_through_species
   end
 
-  def list_monsters_through_species
+  def pick_monsters_through_species
     puts "Pick a number to show all monsters that belong to that species".colorize(:yellow)
     input = (gets.strip.to_i) - 1
 
-    if input < Mondex::Species.all.count
+    if input.between?(0, Mondex::Species.all.count - 1)
       monsters = Mondex::Species.all[input].monsters
-      list_all_monsters(monsters)
+      pick_monsters(monsters)
     else
       invalid_selection
-      list_monsters_through_species
+      pick_monsters_through_species
     end
   end
 
