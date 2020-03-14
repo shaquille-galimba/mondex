@@ -19,7 +19,7 @@ class Mondex::Species
   end
 
   def self.find_by_name(species_name)
-    self.all.find {|s| s.name == species_name || s.name == "#{species_name}s"}
+    self.all.find {|s| s.name == species_name}
   end
 
   def self.create_or_find_by_name(species_name)

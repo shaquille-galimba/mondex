@@ -10,12 +10,13 @@ class Mondex::CLI
     puts "Welcome to Mondex!".colorize(:blue)
     puts "Your monster hunter 'Pokedex'!".colorize(:blue)
     puts "'Know your enemy' before you hunt and carve your spoils!".colorize(:blue)
-    puts "Pick the number of your choice.".colorize(:blue)
+    # puts "Pick the number of your choice.".colorize(:yellow)
     # binding.pry
     get_user_choice
   end
 
   def get_user_choice
+    puts "Pick the number of your choice.".colorize(:yellow)
     puts "1. List all monster"
     puts "2. List all species"
     puts "3. Exit Mondex :("
@@ -40,9 +41,10 @@ class Mondex::CLI
 
   def list_all_monsters(array_of_monsters)
     print_monsters(array_of_monsters)
-    puts "Type the number or name of the monster to view its details or type 'all' to view all monster details"
+    puts "Type the number or name of the monster to view its details or type 'all' to view all monster details".colorize(:yellow)
     input = gets.strip.split.map {|w| w.capitalize}.join(" ")
     number_choice = (input.to_i) - 1
+
     if input == "All"
       print_monsters_details(array_of_monsters)
     elsif monster = Mondex::Monster.find_by_name(input)
@@ -65,7 +67,7 @@ class Mondex::CLI
   end
 
   def list_monsters_through_species
-    puts "Pick a number to show all monsters that belong to that species"
+    puts "Pick a number to show all monsters that belong to that species".colorize(:yellow)
     input = (gets.strip.to_i) - 1
 
     if input < Mondex::Species.all.count
@@ -78,12 +80,14 @@ class Mondex::CLI
   end
 
   def invalid_selection
-    puts "Please pick a valid selection"
+    puts "Please pick a valid selection".colorize(:red)
   end
 
   def print_details(monster)
       puts "----------------------------------------------------------------------------"
       puts monster.name.colorize(:color => :black, :background => :white)
+      puts "Description:".colorize(:blue)
+      puts "  #{monster.bio}"
       puts "Species: ".colorize(:light_blue) + "#{monster.species.name} | " + "Locations: ".colorize(:light_blue) + "#{monster.locations}"
       puts "Weaknesses:".colorize(:red)
       monster.weakness.each {|w| puts " #{w}"} if monster.weakness
@@ -91,8 +95,8 @@ class Mondex::CLI
       monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
       puts "Elements:".colorize(:yellow)
       puts "  #{monster.elements}"
-      puts "Description:".colorize(:blue)
-      puts "  #{monster.bio}"
+      # puts "Description:".colorize(:blue)
+      # puts "  #{monster.bio}"
       puts "----------------------------------------------------------------------------"
   end
 
