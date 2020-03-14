@@ -10,7 +10,7 @@ class Mondex::CLI
     puts "Welcome to Mondex!".colorize(:blue)
     puts "Your monster hunter 'Pokedex'!".colorize(:blue)
     puts "'Know your enemy' before you hunt and carve your spoils!".colorize(:blue)
-    binding.pry
+    # binding.pry
     get_user_choice
   end
 
@@ -53,6 +53,7 @@ class Mondex::CLI
       print_details(array_of_monsters[number_choice])
     else
       invalid_selection
+      pick_monsters(array_of_monsters)
     end
     get_user_choice
   end
@@ -62,7 +63,6 @@ class Mondex::CLI
   end
 
   def print_species
-    # Mondex::Species.all.each_with_index {|s, idx| puts "#{idx+1}. #{s.name}"}
     print_monsters(Mondex::Species.all)
     pick_monsters_through_species
   end
