@@ -15,7 +15,7 @@ class Mondex::Species
   # end
 
   def self.all
-    @@all
+    @@all.sort_by {|s| s.name}
   end
 
   def self.find_by_name(species_name)

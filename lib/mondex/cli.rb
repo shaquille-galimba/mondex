@@ -1,9 +1,11 @@
+require 'colorize'
+
 class Mondex::CLI
   WEBSITE = "https://monsterhunterworld.wiki.fextralife.com/Large+Monsters"
   def call
     create_monsters
     add_attributes_to_monsters
-    puts "Welcome to Mondex!"
+    puts "Welcome to Mondex!".colorize(:light_blue)
     puts "Your monster hunter 'Pokedex'!"
     puts "'Know your enemy' before you hunt and carve your spoils!"
     puts "Pick the number of your choice."
@@ -19,7 +21,7 @@ class Mondex::CLI
 
     case choice
     when "1"
-      list_all_monsters
+      list_all_monsters(Mondex::Monster.all)
     when "2"
       list_species
     when "3"
@@ -34,13 +36,13 @@ class Mondex::CLI
     array_of_monsters.each {|m| print_details(m)}
   end
 
-  def list_all_monsters
-    print_monsters(Mondex::Monster.all)
+  def list_all_monsters(array_of_monsters)
+    print_monsters(array_of_monsters)
     puts "Type the name of the monster to view its details or type 'all' to view all monster details"
     input = gets.strip.split.map {|w| w.capitalize}.join(" ")
 
     if input == "All"
-      print_monsters_details(Mondex::Monster.all)
+      print_monsters_details(array_of_monsters)
     elsif monster = Mondex::Monster.find_by_name(input)
       print_details(monster)
     else
@@ -54,8 +56,21 @@ class Mondex::CLI
   end
 
   def list_species
-    Mondex::Species.all.each {|s| puts s.name}
+    Mondex::Species.all.each_with_index {|s, idx| puts "#{idx+1}. #{s.name}"}
+    list_monsters_through_species
+  end
+
+  def list_monsters_through_species
     puts "Pick a number to show all monsters that belong to that species"
+    input = (gets.strip.to_i) - 1
+
+    if input < Mondex::Species.all.count
+      monsters = Mondex::Species.all[input].monsters
+      list_all_monsters(monsters)
+    else
+      invalid_selection
+      list_monsters_through_species
+    end
   end
 
   def invalid_selection
