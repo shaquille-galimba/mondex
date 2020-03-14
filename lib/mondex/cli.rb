@@ -3,13 +3,15 @@ require 'colorize'
 class Mondex::CLI
   WEBSITE = "https://monsterhunterworld.wiki.fextralife.com/Large+Monsters"
   def call
+    puts "Loading...".colorize(:red)
     create_monsters
     add_attributes_to_monsters
-    puts "Welcome to Mondex!".colorize(:light_blue)
-    puts "Your monster hunter 'Pokedex'!"
-    puts "'Know your enemy' before you hunt and carve your spoils!"
-    puts "Pick the number of your choice."
-    binding.pry
+    puts "LOADING COMPLETED!".colorize(:green)
+    puts "Welcome to Mondex!".colorize(:blue)
+    puts "Your monster hunter 'Pokedex'!".colorize(:blue)
+    puts "'Know your enemy' before you hunt and carve your spoils!".colorize(:blue)
+    puts "Pick the number of your choice.".colorize(:blue)
+    # binding.pry
     get_user_choice
   end
 
@@ -38,13 +40,15 @@ class Mondex::CLI
 
   def list_all_monsters(array_of_monsters)
     print_monsters(array_of_monsters)
-    puts "Type the name of the monster to view its details or type 'all' to view all monster details"
+    puts "Type the number or name of the monster to view its details or type 'all' to view all monster details"
     input = gets.strip.split.map {|w| w.capitalize}.join(" ")
-
+    number_choice = (input.to_i) - 1
     if input == "All"
       print_monsters_details(array_of_monsters)
     elsif monster = Mondex::Monster.find_by_name(input)
       print_details(monster)
+    elsif number_choice < array_of_monsters.count
+      print_details(array_of_monsters[number_choice])
     else
       invalid_selection
     end
@@ -78,18 +82,18 @@ class Mondex::CLI
   end
 
   def print_details(monster)
-      puts "--------------------------------------------------------------"
-      puts monster.name
-      puts "Species: #{monster.species.name} | Locations: #{monster.locations}"
-      puts "Weaknesses:"
+      puts "----------------------------------------------------------------------------"
+      puts monster.name.colorize(:color => :black, :background => :white)
+      puts "Species: ".colorize(:light_blue) + "#{monster.species.name} | " + "Locations: ".colorize(:light_blue) + "#{monster.locations}"
+      puts "Weaknesses:".colorize(:red)
       monster.weakness.each {|w| puts " #{w}"} if monster.weakness
-      puts "Resistances:"
+      puts "Resistances:".colorize(:green)
       monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
-      puts "Elements:"
+      puts "Elements:".colorize(:yellow)
       puts "  #{monster.elements}"
-      puts "Description:"
+      puts "Description:".colorize(:blue)
       puts "  #{monster.bio}"
-      puts "--------------------------------------------------------------"
+      puts "----------------------------------------------------------------------------"
   end
 
   def create_monsters
