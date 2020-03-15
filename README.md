@@ -1,8 +1,8 @@
 # Mondex
 
 It's like Pokedex but for Monster Hunter Bosses!
-Gives you the species, locations, and weaknesses of a specific monster.
-Allows user the choice to list all the monster, species, or locations
+Gives you the details of the boss you will hunt
+Allows user the choice to list all the monster and species
 Then the app shows the details of a monster they have chosen.
 
 ## Installation
@@ -23,7 +23,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Learn about a certain Monster hunter boss before you even unlock them.
+Save a lot of time searching through the web for a boss' weakness or resistances.
+Know which monsters belong to certain species to help you finish those quests!
 
 ## Development
 

@@ -8,8 +8,8 @@ class Mondex::CLI
     add_attributes_to_monsters
     puts "LOADING COMPLETED!".colorize(:green)
     puts "Welcome to Mondex!".colorize(:blue)
-    puts "Your monster hunter 'Pokedex'!".colorize(:blue)
-    puts "'Know your enemy' before you hunt and carve your spoils!".colorize(:blue)
+    puts "Your monster hunter 'Pokedex'!"
+    puts "'Know your enemy' before you hunt and carve your spoils!"
     # binding.pry
     get_user_choice
   end
