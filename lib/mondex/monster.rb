@@ -1,4 +1,5 @@
 class Mondex::Monster
+  extend Concerns::Findable
   attr_accessor :name, :bio, :species, :locations, :url, :weakness, :elements, :resistances
 
   @@all = []
@@ -18,10 +19,6 @@ class Mondex::Monster
     monsters_array.each do |hash|
       Mondex::Monster.new(hash)
     end
-  end
-
-  def self.find_by_name(monster_name)
-    Mondex::Monster.all.find {|m| m.name == monster_name}
   end
 
   def add_attributes(hash)

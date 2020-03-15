@@ -1,4 +1,5 @@
 class Mondex::Species
+  extend Concerns::Findable
   attr_accessor :name
   attr_reader :monsters
 
@@ -12,10 +13,6 @@ class Mondex::Species
 
   def self.all
     @@all.sort_by {|s| s.name}
-  end
-
-  def self.find_by_name(species_name)
-    self.all.find {|s| s.name == species_name}
   end
 
   def self.create_or_find_by_name(species_name)

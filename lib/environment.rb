@@ -1,8 +1,12 @@
+module Concerns
+end
+require_relative 'concerns/findable'
 require_relative "mondex/version"
 require_relative "mondex/cli"
 require_relative "mondex/scraper"
 require_relative "mondex/monster"
 require_relative "mondex/species"
+
 
 require 'nokogiri'
 require 'pry'
