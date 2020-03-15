@@ -3,18 +3,19 @@ require 'colorize'
 class Mondex::CLI
   WEBSITE = "https://monsterhunterworld.wiki.fextralife.com/Large+Monsters"
   def call
-    puts "Loading...".colorize(:red)
+    puts "Getting information from Ecological Research...".colorize(:red)
     create_monsters
+    puts "Definitely not bribing...".colorize(:red)
     add_attributes_to_monsters
-    puts "LOADING COMPLETED!".colorize(:green)
-    puts "Welcome to Mondex!".colorize(:blue)
+    puts "Information retrieved!".colorize(:green)
+    puts "WELCOME TO MONDEX!".colorize(:blue)
     puts "Your monster hunter 'Pokedex'!"
     puts "'Know your enemy' before you hunt and carve your spoils!"
-    # binding.pry
-    get_user_choice
+    main_menu
   end
 
-  def get_user_choice
+
+  def main_menu
     puts "Pick the number of your choice.".colorize(:yellow)
     puts "1. List all monster"
     puts "2. List all species"
@@ -30,16 +31,35 @@ class Mondex::CLI
       exit
     else
       invalid_selection
-      get_user_choice
+      main_menu
     end
+  end
+
+  def print_details(monster)
+      puts "----------------------------------------------------------------------------"
+      puts monster.name.colorize(:color => :black, :background => :white)
+      puts "Description:".colorize(:blue)
+      puts "  #{monster.bio}"
+      puts "Species: ".colorize(:light_blue) + "#{monster.species.name} | " + "Locations: ".colorize(:light_blue) + "#{monster.locations}"
+      puts "Weaknesses:".colorize(:red)
+      monster.weakness.each {|w| puts " #{w}"} if monster.weakness
+      puts "Resistances:".colorize(:green)
+      monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
+      puts "Elements:".colorize(:yellow)
+      puts "  #{monster.elements}"
+      puts "----------------------------------------------------------------------------"
   end
 
   def print_monsters_details(array_of_monsters)
     array_of_monsters.each {|m| print_details(m)}
   end
 
+  def print_list(array_of_monsters)
+    array_of_monsters.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
+  end
+
   def pick_monsters(array_of_monsters)
-    print_monsters(array_of_monsters)
+    print_list(array_of_monsters)
     puts "Type the number or name of the monster to view its details or type 'all' to view all monster details".colorize(:yellow)
     input = gets.strip.split.map {|w| w.capitalize}.join(" ")
     number_choice = (input.to_i) - 1
@@ -55,15 +75,11 @@ class Mondex::CLI
       invalid_selection
       pick_monsters(array_of_monsters)
     end
-    get_user_choice
-  end
-
-  def print_monsters(array_of_monsters)
-    array_of_monsters.each_with_index {|m, i| puts "#{i+1}. #{m.name}"}
+    main_menu
   end
 
   def print_species
-    print_monsters(Mondex::Species.all)
+    print_list(Mondex::Species.all)
     pick_monsters_through_species
   end
 
@@ -82,21 +98,6 @@ class Mondex::CLI
 
   def invalid_selection
     puts "Please pick a valid selection".colorize(:red)
-  end
-
-  def print_details(monster)
-      puts "----------------------------------------------------------------------------"
-      puts monster.name.colorize(:color => :black, :background => :white)
-      puts "Description:".colorize(:blue)
-      puts "  #{monster.bio}"
-      puts "Species: ".colorize(:light_blue) + "#{monster.species.name} | " + "Locations: ".colorize(:light_blue) + "#{monster.locations}"
-      puts "Weaknesses:".colorize(:red)
-      monster.weakness.each {|w| puts " #{w}"} if monster.weakness
-      puts "Resistances:".colorize(:green)
-      monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
-      puts "Elements:".colorize(:yellow)
-      puts "  #{monster.elements}"
-      puts "----------------------------------------------------------------------------"
   end
 
   def create_monsters
