@@ -2,6 +2,7 @@ require 'colorize'
 
 class Mondex::CLI
   WEBSITE = "https://monsterhunterworld.wiki.fextralife.com/Large+Monsters"
+
   def call
     puts "Getting information from Ecological Research...".colorize(:red)
     create_monsters

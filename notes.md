@@ -4,18 +4,19 @@
 
 FLOW
   Application greets the user and give a brief description about itself
-  Ask user if they want to list all the monster, list species, or list locations
+  Ask user if they want to list all the monster, list species, or exit the application
     if user choose to list all the monster
       list all the monster
-      ask user to choose monster of their choice
+      ask user to choose monster of their choice or view all monster
       prints out the details of the chosen monster
-    if user choose to list species or locations
+    if user choose to list species
       list all the species
       ask user to choose a specific species
-      list all the monsters that has the specific chosen species
-      ask user to choose from the monster list
+      list all the monsters that belongs to the species
+      ask user to choose from the monster list or view all
       prints out the details of the chosen monster
-  Ask user if they want to go back to choose what to list, go back to the previous list, or exit the Application
+    if user choose exit
+      exit the program
 
 CLASSES
   -CLI
@@ -43,24 +44,3 @@ https://monsterhunterworld.wiki.fextralife.com/Large+Monsters
 	-Species
 		-Monster
 		-Name
-
-    <!-- require 'nokogiri'
-    require 'open-uri'
-
-    site = "https://www.ign.com/wikis/monster-hunter-world/Monster_List_-_Monster_Hunter:_World_and_Iceborne#Large_Monsters"
-
-
-    page = Nokogiri::HTML(open(site))
-
-
-
-    monsters = page.css("section.jsx-1653715561.jsx-3569582989.wiki-section tr td a:last-child")
-
-    # puts monsters
-    boss = []
-    monsters.each do |m|
-      boss << m.text.strip
-    end
-
-    puts boss.count
-    "Finished" -->
