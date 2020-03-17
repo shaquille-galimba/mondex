@@ -60,22 +60,32 @@ class Mondex::CLI
 
   def pick_monsters(array_of_monsters)
     print_list(array_of_monsters)
-    puts "Type the number or name of the monster to view its details or type 'all' to view all monster details".colorize(:yellow)
-    input = gets.strip.split.map {|w| w.capitalize}.join(" ")
-    number_choice = (input.to_i) - 1
-    monsters = array_of_monsters.select {|m| m.name.include?(input)}
 
-    if input == "All"
-      print_monsters_details(array_of_monsters)
-    elsif monsters != []
-      print_monsters_details(monsters)
-    elsif number_choice.between?(0, array_of_monsters.count - 1)
-      print_details(array_of_monsters[number_choice])
-    else
-      invalid_selection
-      pick_monsters(array_of_monsters)
+    input = nil
+    while input != 'Exit'
+      puts "Type the number or name of the monster to view its details".colorize(:yellow)
+      puts "'all' to view all monster details".colorize(:yellow)
+      puts "'list' to view the list of monsters".colorize(:yellow)
+      puts "'exit' to go back to main menu".colorize(:yellow)
+      input = gets.strip.split.map {|w| w.capitalize}.join(" ")
+      number_choice = (input.to_i) - 1
+      monsters = array_of_monsters.select {|m| m.name.include?(input)}
+
+      if input == "All"
+        print_monsters_details(array_of_monsters)
+        main_menu
+      elsif monsters != []
+        print_monsters_details(monsters)
+      elsif number_choice.between?(0, array_of_monsters.count - 1)
+        print_details(array_of_monsters[number_choice])
+      elsif input == 'List'
+        print_list(array_of_monsters)
+      else
+        invalid_selection
+      end
     end
     main_menu
+    # pick_monsters(array_of_monsters)
   end
 
   def print_species
