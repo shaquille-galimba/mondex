@@ -86,7 +86,6 @@ class Mondex::CLI
       end
     end
     main_menu
-    # pick_monsters(array_of_monsters)
   end
 
   def print_species

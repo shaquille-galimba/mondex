@@ -1,6 +1,7 @@
 class Mondex::Monster
   extend Concerns::Findable
-  attr_accessor :name, :bio, :species, :locations, :url, :weakness, :elements, :resistances
+  attr_accessor :name, :bio, :locations, :url, :weakness, :elements, :resistances
+  attr_reader :species
 
   @@all = []
 
@@ -21,12 +22,16 @@ class Mondex::Monster
     end
   end
 
+  def add_species(species)
+    @species = species
+  end
+
   def add_attributes(hash)
     hash.each do |attribute, value|
       if attribute == :species
         new_species = Mondex::Species.create_or_find_by_name(value)
-        self.send("#{attribute}=", new_species)
-        new_species.monsters << self
+        self.add_species(new_species)
+        new_species.add_monster(self)
       else
         self.send("#{attribute}=", value)
       end

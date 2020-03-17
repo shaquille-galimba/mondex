@@ -11,6 +11,10 @@ class Mondex::Species
     @@all << self
   end
 
+  def add_monster(monster)
+    @monsters << monster
+  end
+
   def self.all
     @@all.sort_by {|s| s.name}
   end
