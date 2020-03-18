@@ -70,7 +70,7 @@ class Mondex::CLI
       puts "'list' to view the list of monsters".colorize(:yellow)
       puts "'exit' to go back to main menu".colorize(:yellow)
       input = gets.strip.split.map {|w| w.capitalize}.join(" ")
-      number_choice = (input.to_i) - 1
+
       monsters = array_of_monsters.select {|m| m.name.include?(input)}
 
       if input == "All"
@@ -78,8 +78,8 @@ class Mondex::CLI
         main_menu
       elsif monsters != []
         print_monsters_details(monsters)
-      elsif number_choice.between?(0, array_of_monsters.count - 1)
-        print_details(array_of_monsters[number_choice])
+      elsif (input.to_i-1).between?(0, array_of_monsters.count - 1)
+        print_details(array_of_monsters[input.to_i-1])
       elsif input == 'List'
         print_list(array_of_monsters)
       else
