@@ -5,27 +5,27 @@ require "mondex/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "mondex"
-  spec.version       = Mondex::VERSION
-  spec.authors       = ["'Shaquille Galimba'"]
-  spec.email         = ["'shaqrivergalimba24@gmail.com'"]
+  spec.version       = '0.0.1'
+  spec.authors       = ["Shaquille Galimba"]
+  spec.email         = "shaqrivergalimba24@gmail.com"
 
   spec.summary       = "Mondex is like Pokedex but for Monster hunter boss!"
   spec.description   = "Gives you the species, locations, and weaknesses of a specific monster."
-  spec.homepage      = "http://www.mondex.com"
+  spec.homepage      = "https://rubygems.org/gems/mondex"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "http://www.mondex.com"
-
-    spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "http://www.mondex.com"
-    spec.metadata["changelog_uri"] = "http://www.mondex.com"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
+  # if spec.respond_to?(:metadata)
+  #   spec.metadata["allowed_push_host"] = "http://www.mondex.com"
+  #
+  #   spec.metadata["homepage_uri"] = spec.homepage
+  #   spec.metadata["source_code_uri"] = "http://www.mondex.com"
+  #   spec.metadata["changelog_uri"] = "http://www.mondex.com"
+  # else
+  #   raise "RubyGems 2.0 or newer is required to protect against " \
+  #     "public gem pushes."
+  # end
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
