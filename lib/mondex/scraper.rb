@@ -5,13 +5,11 @@ class Mondex::Scraper
     monster_page = Nokogiri::HTML(open(index_url))
     monsters_list = monster_page.css("#tagged-pages-container a")
 
-    monsters = []
-    monsters_list.each do |m|
+    monsters_list.collect do |m|
       monster_name = m.text
       monster_url = m.attribute("href")
-      monsters << {name: monster_name, url: monster_url}
+      {name: monster_name, url: monster_url}
     end
-    monsters
   end
 
   def self.scrape_monster_page(url)
