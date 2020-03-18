@@ -29,6 +29,7 @@ class Mondex::CLI
     when "2"
       print_species
     when "3"
+      goodbye
       exit
     else
       invalid_selection
@@ -37,18 +38,18 @@ class Mondex::CLI
   end
 
   def print_details(monster)
-      puts "----------------------------------------------------------------------------"
-      puts monster.name.colorize(:color => :black, :background => :white)
-      puts "Description:".colorize(:blue)
-      puts "  #{monster.bio}"
-      puts "Species: ".colorize(:light_blue) + "#{monster.species.name} | " + "Locations: ".colorize(:light_blue) + "#{monster.locations}"
-      puts "Weaknesses:".colorize(:red)
-      monster.weakness.each {|w| puts " #{w}"} if monster.weakness
-      puts "Resistances:".colorize(:green)
-      monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
-      puts "Elements:".colorize(:yellow)
-      puts "  #{monster.elements}"
-      puts "----------------------------------------------------------------------------"
+    puts "----------------------------------------------------------------------------"
+    puts monster.name.colorize(:color => :black, :background => :white)
+    puts "Description:".colorize(:blue)
+    puts "  #{monster.bio}"
+    puts "Species: ".colorize(:light_blue) + "#{monster.species.name} | " + "Locations: ".colorize(:light_blue) + "#{monster.locations}"
+    puts "Weaknesses:".colorize(:red)
+    monster.weakness.each {|w| puts " #{w}"} if monster.weakness
+    puts "Resistances:".colorize(:green)
+    monster.resistances.each {|r| puts "  #{r}"} if monster.resistances
+    puts "Elements:".colorize(:yellow)
+    puts "  #{monster.elements}"
+    puts "----------------------------------------------------------------------------"
   end
 
   def print_monsters_details(array_of_monsters)
@@ -108,6 +109,10 @@ class Mondex::CLI
 
   def invalid_selection
     puts "Please pick a valid selection".colorize(:red)
+  end
+
+  def goodbye
+    puts "Thank you for using Mondex! Happy hunting!".upcase.colorize(:green)
   end
 
   def create_monsters
