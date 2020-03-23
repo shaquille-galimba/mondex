@@ -28,9 +28,9 @@ class Mondex::Scraper
       elsif title == "Elements"
         monster[:elements] = monster_box[idx+1]
       elsif title == "Weakness" || title == "Weaknesses"
-        monster[:weakness] = monster_box[idx+1].gsub(/[(][A-Z]/, "(w").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
+        monster[:weakness] = monster_box[idx+1].gsub(/[(][A-Z]/, "(*").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
       elsif title == "Resistances"
-        monster[:resistances] = monster_box[idx+1].gsub(/[(][A-Z]/, "(w").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
+        monster[:resistances] = monster_box[idx+1].gsub(/[(][A-Z]/, "(*").gsub("\u00e2\u00AD\u0090", "*").gsub("\u00A0", "").split /(?=[A-Z])/
       end
     end
 
