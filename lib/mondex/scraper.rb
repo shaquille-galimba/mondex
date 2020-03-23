@@ -19,12 +19,12 @@ class Mondex::Scraper
 
     monster[:bio] = monster_page.css("#wiki-content-block blockquote p").text
 
-    monster_box = monster_page.css("div.infobox .wiki_table tr").children.map {|el| el.text.strip}.reject {|c| c.empty?}
+    monster_box = monster_page.css("div.infobox .wiki_table tr").children.map {|el| el.text.strip.delete_suffix(" ")}.reject {|c| c.empty?}
     monster_box.each_with_index do |title, idx|
       if title == "Location(s)" || title == "Locations"
         monster[:locations] = monster_box[idx+1]
       elsif title == "Species"
-        monster[:species] = monster_box[idx+1].delete_suffix("s")
+        monster[:species] = monster_box[idx+1].delete_suffix("s").gsub("\u00A0", "")
       elsif title == "Elements"
         monster[:elements] = monster_box[idx+1]
       elsif title == "Weakness" || title == "Weaknesses"
